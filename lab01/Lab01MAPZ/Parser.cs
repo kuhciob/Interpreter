@@ -185,11 +185,9 @@ namespace Lab01MAPZ
                         expressionStatement.SetTree(onlyexp);
                         return expressionStatement;
                 }
-                //string error = "Fatal error: dont fitted statement";
-                //throw new Exception(error);
 
             }
-            string error = "Fatal error: dont fitted statement";
+            string error = "Fatal error: don`t fitted statement";
             throw new Exception(error);
         }
         private Expression expression()
@@ -205,93 +203,17 @@ namespace Lab01MAPZ
                         match((int)TokenTags.NUMBER);
                         Expression eNumb1 = new NumbExpr(((Numb)TokenList[TokenListItem - 1]).value);
                         if (lookahead == (int)TokenTags.BOPERATOR)
-                        {
-                            int operator_indx = match((int)TokenTags.BOPERATOR);
-
-                            Expression eNumb2 = expression();
-
-
-                            if (eNumb2.Type == ExpressionTypes.String)
-                            {
-                                string err1 = "Syntax Error : must be Number";
-                                throw new Exception(err1);
-                            }
-                            Expression oprtr;
-                            switch (((Word)TokenList[operator_indx]).lexeme)
-                            {
-                                case "+":
-                                    oprtr = new Pluss(ExpressionTypes.Number, eNumb1, eNumb2);
-                                    break;
-                                case "-":
-                                    oprtr = new Minus(eNumb1, eNumb2);
-                                    break;
-                                case "*":
-                                    oprtr = new Mult(eNumb1, eNumb2);
-                                    break;
-                                case "/":
-                                    oprtr = new Div(eNumb1, eNumb2);
-                                    break;
-                                case ">":
-                                    oprtr = new Bigger(eNumb1, eNumb2);
-                                    break;
-                                case "<":
-                                    oprtr = new Less(eNumb1, eNumb2);
-                                    break;
-                                case ">=":
-                                    oprtr = new BiggerEqual(eNumb1, eNumb2);
-                                    break;
-                                case "<=":
-                                    oprtr = new LessEqual(eNumb1, eNumb2);
-                                    break;
-                                case "==":
-                                    oprtr = new Equal(ExpressionTypes.Number, eNumb1, eNumb2);
-                                    break;
-                                case "!=":
-                                    oprtr = new NotEqual(ExpressionTypes.Number, eNumb1, eNumb2);
-                                    break;
-                                default: oprtr = null; break;
-                            }
-                            return oprtr;
-                        }
+                            return matchBOPERATOR(eNumb1);
                         else
-                        {
                             return eNumb1;
-                        }
 
                     case (int)TokenTags.LITERAL:
                         match((int)TokenTags.LITERAL);
                         Expression litr1 = new StrExpr(((Word)TokenList[TokenListItem - 1]).lexeme);
                         if (lookahead == (int)TokenTags.STROPERATOR)
-                        {
-                            int operator_indx = match((int)TokenTags.STROPERATOR);
-
-                            Expression litr2 = expression();
-                            if (litr2.Type == ExpressionTypes.Number)
-                            {
-                                litr2 = new StrExpr(Convert.ToString(litr2.Value()));
-                            }
-                            Expression oprtr;
-                            switch (((Word)TokenList[operator_indx]).lexeme)
-                            {
-                                case "$+":
-                                    oprtr = new Pluss(ExpressionTypes.String, litr1, litr2);
-                                    break;
-                                case "$==":
-                                    oprtr = new Equal(ExpressionTypes.String, litr1, litr2);
-                                    break;
-                                case "$!=":
-                                    oprtr = new NotEqual(ExpressionTypes.String, litr1, litr2);
-                                    break;
-                                default: oprtr = null; break;
-                            }
-                            return oprtr;
-
-                        }
+                            return matchSTROPERATOR(litr1);
                         else
-                        {
                             return litr1;
-                        }
-
 
                     case (int)TokenTags.ID:
                         int IDindx = match((int)TokenTags.ID);
@@ -301,77 +223,10 @@ namespace Lab01MAPZ
                         IDExpr id1 = new IDExpr(str1, IDs);
 
                         if (lookahead == (int)TokenTags.BOPERATOR)
-                        {
-                            int operator_indx = match((int)TokenTags.BOPERATOR);
+                            return matchBOPERATOR(id1);
 
-                            Expression eNumb2 = expression();
-                            if (eNumb2.Type == ExpressionTypes.String)
-                            {
-                                string err1 = "Syntax Error : can`t add String to Number";
-                                throw new Exception(err1);
-                            }
-                            Expression oprtr;
-                            switch (((Word)TokenList[operator_indx]).lexeme)
-                            {
-                                case "+":
-                                    oprtr = new Pluss(ExpressionTypes.Number, id1, eNumb2);
-                                    break;
-                                case "-":
-                                    oprtr = new Minus(id1, eNumb2);
-                                    break;
-                                case "*":
-                                    oprtr = new Mult(id1, eNumb2);
-                                    break;
-                                case "/":
-                                    oprtr = new Div(id1, eNumb2);
-                                    break;
-                                case ">":
-                                    oprtr = new Bigger(id1, eNumb2);
-                                    break;
-                                case "<":
-                                    oprtr = new Less(id1, eNumb2);
-                                    break;
-                                case ">=":
-                                    oprtr = new BiggerEqual(id1, eNumb2);
-                                    break;
-                                case "<=":
-                                    oprtr = new LessEqual(id1, eNumb2);
-                                    break;
-                                case "==":
-                                    oprtr = new Equal(ExpressionTypes.Number, id1, eNumb2);
-                                    break;
-                                case "!=":
-                                    oprtr = new NotEqual(ExpressionTypes.Number, id1, eNumb2);
-                                    break;
-                                default: oprtr = null; break;
-                            }
-                            return oprtr;
-                        }
                         if (lookahead == (int)TokenTags.STROPERATOR)
-                        {
-                            int operator_indx = match((int)TokenTags.STROPERATOR);
-
-                            Expression litr2 = expression();
-                            if (litr2.Type == ExpressionTypes.Number)
-                            {
-                                litr2 = new StrExpr(Convert.ToString(litr2.Value()));
-                            }
-                            Expression oprtr;
-                            switch (((Word)TokenList[operator_indx]).lexeme)
-                            {
-                                case "$+":
-                                    oprtr = new Pluss(ExpressionTypes.String, id1, litr2);
-                                    break;
-                                case "$==":
-                                    oprtr = new Equal(ExpressionTypes.String, id1, litr2);
-                                    break;
-                                case "$!=":
-                                    oprtr = new NotEqual(ExpressionTypes.String, id1, litr2);
-                                    break;
-                                default: oprtr = null; break;
-                            }
-                            return oprtr;
-                        }
+                            return matchSTROPERATOR(id1);
 
                         return id1;
 
@@ -380,85 +235,11 @@ namespace Lab01MAPZ
                         expr = expression();
                         match((int)TokenTags.CLOSECIRKBRACKET);
 
-                        if (expr.Type == ExpressionTypes.Number)
-                        {
-                            if (lookahead == (int)TokenTags.BOPERATOR)
-                            {
-                                int operator_indx = match((int)TokenTags.BOPERATOR);
+                        if (lookahead == (int)TokenTags.BOPERATOR)
+                            return matchBOPERATOR(expr);
 
-                                Expression eNumb2 = expression();
-                                if (eNumb2.Type == ExpressionTypes.String)
-                                {
-                                    string err1 = "Syntax Error : can`t add String to Number";
-                                    throw new Exception(err1);
-                                }
-                                Expression oprtr;
-                                switch (((Word)TokenList[operator_indx]).lexeme)
-                                {
-                                    case "+":
-                                        oprtr = new Pluss(ExpressionTypes.Number, expr, eNumb2);
-                                        break;
-                                    case "-":
-                                        oprtr = new Minus(expr, eNumb2);
-                                        break;
-                                    case "*":
-                                        oprtr = new Mult(expr, eNumb2);
-                                        break;
-                                    case "/":
-                                        oprtr = new Div(expr, eNumb2);
-                                        break;
-                                    case ">":
-                                        oprtr = new Bigger(expr, eNumb2);
-                                        break;
-                                    case "<":
-                                        oprtr = new Less(expr, eNumb2);
-                                        break;
-                                    case ">=":
-                                        oprtr = new BiggerEqual(expr, eNumb2);
-                                        break;
-                                    case "<=":
-                                        oprtr = new LessEqual(expr, eNumb2);
-                                        break;
-                                    case "==":
-                                        oprtr = new Equal(ExpressionTypes.Number, expr, eNumb2);
-                                        break;
-                                    case "!=":
-                                        oprtr = new NotEqual(ExpressionTypes.Number, expr, eNumb2);
-                                        break;
-                                    default: oprtr = null; break;
-                                }
-                                return oprtr;
-                            }
-                        }
-                        else
-                        if (expr.Type == ExpressionTypes.String)
-                        {
-                            if (lookahead == (int)TokenTags.STROPERATOR)
-                            {
-                                int operator_indx = match((int)TokenTags.STROPERATOR);
-
-                                Expression litr2 = expression();
-                                if (litr2.Type == ExpressionTypes.Number)
-                                {
-                                    litr2 = new StrExpr(Convert.ToString(litr2.Value()));
-                                }
-                                Expression oprtr;
-                                switch (((Word)TokenList[operator_indx]).lexeme)
-                                {
-                                    case "$+":
-                                        oprtr = new Pluss(ExpressionTypes.String, expr, litr2);
-                                        break;
-                                    case "$==":
-                                        oprtr = new Equal(ExpressionTypes.String, expr, litr2);
-                                        break;
-                                    case "$!=":
-                                        oprtr = new NotEqual(ExpressionTypes.String, expr, litr2);
-                                        break;
-                                    default: oprtr = null; break;
-                                }
-                                return oprtr;
-                            }
-                        }
+                        if (lookahead == (int)TokenTags.STROPERATOR)
+                            return matchSTROPERATOR(expr);
 
                         return expr;
 
@@ -494,7 +275,7 @@ namespace Lab01MAPZ
             else
             {
                 string err = "Out of range";
-                MessageBox.Show(err);
+                //MessageBox.Show(err);
                 throw new Exception(err);
             }
 
@@ -518,35 +299,80 @@ namespace Lab01MAPZ
             return TokenListItem - 1;
         }
 
-        /*private Expression matchID(int t)
+        private Expression matchBOPERATOR(Expression eNumb1)
         {
-            if (lookahead == t)
+            int operator_indx = match((int)TokenTags.BOPERATOR);
+
+            Expression eNumb2 = expression();
+
+
+            if (eNumb2.Type == ExpressionTypes.String)
             {
-                string IDname = ((Word)TokenList[TokenListItem]).lexeme;
-                Expression w = (Expression)IDs[IDname];
-                if (w != null)
-                {
-                    ++TokenListItem;
-                    if (TokenListItem < TokenList.Count)
-                        lookahead = (int)TokenList[TokenListItem].tag;
-                    return (Expression)IDs[IDname];
-                }
-                else
-                {
-                    string err = "The name '" + IDname + "' does not exist in the current context ";
-                    //MessageBox.Show(err);
-                    throw new Exception(err);
-
-                }
+                string err1 = "Syntax Error : must be Number";
+                throw new Exception(err1);
             }
-            else
+            Expression oprtr;
+            switch (((Word)TokenList[operator_indx]).lexeme)
             {
-                //MessageBox.Show("Syntax Error: ID expected");
-                throw new Exception("Syntax Error: ID expected");
+                case "+":
+                    oprtr = new Pluss(ExpressionTypes.Number, eNumb1, eNumb2);
+                    break;
+                case "-":
+                    oprtr = new Minus(eNumb1, eNumb2);
+                    break;
+                case "*":
+                    oprtr = new Mult(eNumb1, eNumb2);
+                    break;
+                case "/":
+                    oprtr = new Div(eNumb1, eNumb2);
+                    break;
+                case ">":
+                    oprtr = new Bigger(eNumb1, eNumb2);
+                    break;
+                case "<":
+                    oprtr = new Less(eNumb1, eNumb2);
+                    break;
+                case ">=":
+                    oprtr = new BiggerEqual(eNumb1, eNumb2);
+                    break;
+                case "<=":
+                    oprtr = new LessEqual(eNumb1, eNumb2);
+                    break;
+                case "==":
+                    oprtr = new Equal(ExpressionTypes.Number, eNumb1, eNumb2);
+                    break;
+                case "!=":
+                    oprtr = new NotEqual(ExpressionTypes.Number, eNumb1, eNumb2);
+                    break;
+                default: throw new Exception("Fatal error: wrong operator");
             }
+            return oprtr;
+        }
+        private Expression matchSTROPERATOR(Expression litr1)
+        {
+            int operator_indx = match((int)TokenTags.STROPERATOR);
 
-        }*/
-
+            Expression litr2 = expression();
+            if (litr2.Type == ExpressionTypes.Number)
+            {
+                litr2 = new StrExpr(Convert.ToString(litr2.Value()));
+            }
+            Expression oprtr;
+            switch (((Word)TokenList[operator_indx]).lexeme)
+            {
+                case "$+":
+                    oprtr = new Pluss(ExpressionTypes.String, litr1, litr2);
+                    break;
+                case "$==":
+                    oprtr = new Equal(ExpressionTypes.String, litr1, litr2);
+                    break;
+                case "$!=":
+                    oprtr = new NotEqual(ExpressionTypes.String, litr1, litr2);
+                    break;
+                default: throw new Exception("Fatal error: wrong operator");
+            }
+            return oprtr;
+        }
         private Function matchFunk(string name)
         {
             Function f = (Function)functions[name];
