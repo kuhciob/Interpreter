@@ -199,9 +199,29 @@ namespace Lab01MAPZ
 
                 switch (lookahead)
                 {
+                    case (int)TokenTags.BOPERATOR:
+                        int operator_indx = match((int)TokenTags.BOPERATOR);
+
+                        Expression eNumb = expression();
+                        if (eNumb.Type != ExpressionTypes.Number)
+                            throw new Exception("Must be a number");
+
+                        switch (((Word)TokenList[operator_indx]).lexeme)
+                        {
+                            case "+":
+                                return new NumbExpr(Convert.ToDouble(eNumb.Value()));
+                            case "-":
+                                return new NumbExpr((-1) * Convert.ToDouble(eNumb.Value()));
+                            default: throw new Exception("Invalid expression term '"+ ((Word)TokenList[operator_indx]).lexeme+"'");
+                        }
+
                     case (int)TokenTags.NUMBER:
                         match((int)TokenTags.NUMBER);
                         Expression eNumb1 = new NumbExpr(((Numb)TokenList[TokenListItem - 1]).value);
+
+                        if (lookahead == (int)TokenTags.STROPERATOR)
+                            throw new Exception("Number operator expected;");
+
                         if (lookahead == (int)TokenTags.BOPERATOR)
                             return matchBOPERATOR(eNumb1);
                         else
@@ -210,6 +230,9 @@ namespace Lab01MAPZ
                     case (int)TokenTags.LITERAL:
                         match((int)TokenTags.LITERAL);
                         Expression litr1 = new StrExpr(((Word)TokenList[TokenListItem - 1]).lexeme);
+                        if (lookahead == (int)TokenTags.BOPERATOR)
+                            throw new Exception("String operator expected;");
+
                         if (lookahead == (int)TokenTags.STROPERATOR)
                             return matchSTROPERATOR(litr1);
                         else
@@ -217,7 +240,6 @@ namespace Lab01MAPZ
 
                     case (int)TokenTags.ID:
                         int IDindx = match((int)TokenTags.ID);
-
 
                         string str1 = ((Word)TokenList[IDindx]).lexeme;
                         IDExpr id1 = new IDExpr(str1, IDs);
@@ -304,7 +326,6 @@ namespace Lab01MAPZ
             int operator_indx = match((int)TokenTags.BOPERATOR);
 
             Expression eNumb2 = expression();
-
 
             if (eNumb2.Type == ExpressionTypes.String)
             {

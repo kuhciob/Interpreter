@@ -41,11 +41,7 @@ namespace Lab01MAPZ
         public Minus(Expression p1, Expression p2) : base(ExpressionTypes.Number, p1, p2) { }
         public override object Value()
         {
-            //if (param1.Type == ExpressionTypes.Number && param2.Type == ExpressionTypes.Number )
-                return Convert.ToDouble(param1.Value()) - Convert.ToDouble(param2.Value());
-
-           // else
-                //return null;
+            return Convert.ToDouble(param1.Value()) - Convert.ToDouble(param2.Value());
         }
     }
 
@@ -54,10 +50,7 @@ namespace Lab01MAPZ
         public Mult(Expression p1, Expression p2) : base(ExpressionTypes.Number, p1, p2) { }
         public override object Value()
         {
-           // if (param1.Type == ExpressionTypes.Number && param2.Type == ExpressionTypes.Number)
-                return Convert.ToDouble(param1.Value()) * Convert.ToDouble(param2.Value());
-            //else
-               // return null;
+             return Convert.ToDouble(param1.Value()) * Convert.ToDouble(param2.Value());
         }
     }
 
@@ -66,10 +59,7 @@ namespace Lab01MAPZ
         public Div(Expression p1, Expression p2) : base(ExpressionTypes.Number, p1, p2) { }
         public override object Value()
         {
-            //if (param1.Type == ExpressionTypes.Number && param2.Type == ExpressionTypes.Number)
-                return Convert.ToDouble(param1.Value()) / Convert.ToDouble(param2.Value());
-            //else
-                //return null;
+            return Convert.ToDouble(param1.Value()) / Convert.ToDouble(param2.Value());
         }
     }
 
@@ -77,11 +67,8 @@ namespace Lab01MAPZ
     {
         public Bigger(Expression p1, Expression p2) : base(ExpressionTypes.Number, p1, p2) { }
         public override object Value()
-        {
-            //if (param1.Type == ExpressionTypes.Number && param2.Type == ExpressionTypes.Number)
-                return (Convert.ToDouble(param1.Value()) > Convert.ToDouble(param2.Value())) ? 1 : 0;
-           // else
-               // return null;
+        {            
+            return (Convert.ToDouble(param1.Value()) > Convert.ToDouble(param2.Value())) ? 1 : 0;
         }
     }
 
@@ -90,10 +77,7 @@ namespace Lab01MAPZ
         public Less(Expression p1, Expression p2) : base(ExpressionTypes.Number, p1, p2) { }
         public override object Value()
         {
-            //if (param1.Type == ExpressionTypes.Number && param2.Type == ExpressionTypes.Number)
-                return (Convert.ToDouble(param1.Value()) < Convert.ToDouble(param2.Value())) ? 1 : 0;
-            //else
-               // return null;
+            return (Convert.ToDouble(param1.Value()) < Convert.ToDouble(param2.Value())) ? 1 : 0;
         }
     }
 
@@ -131,10 +115,7 @@ namespace Lab01MAPZ
         public BiggerEqual(Expression p1, Expression p2) : base(ExpressionTypes.Number, p1, p2) { }
         public override object Value()
         {
-            //if (param1.Type == ExpressionTypes.Number && param2.Type == ExpressionTypes.Number)
-                return (Convert.ToDouble(param1.Value()) <= Convert.ToDouble(param2.Value())) ? 1 : 0;
-            //else
-                //return null;
+            return (Convert.ToDouble(param1.Value()) <= Convert.ToDouble(param2.Value())) ? 1 : 0;
         }
     }
 
@@ -143,10 +124,7 @@ namespace Lab01MAPZ
         public LessEqual(Expression p1, Expression p2) : base(ExpressionTypes.Number, p1, p2) { }
         public override object Value()
         {
-            //if (param1.Type == ExpressionTypes.Number && param2.Type == ExpressionTypes.Number)
-                return (Convert.ToDouble(param1.Value()) >= Convert.ToDouble(param2.Value())) ? 1 : 0;
-           // else
-                //return null;
+            return (Convert.ToDouble(param1.Value()) >= Convert.ToDouble(param2.Value())) ? 1 : 0;
         }
     }
 }
