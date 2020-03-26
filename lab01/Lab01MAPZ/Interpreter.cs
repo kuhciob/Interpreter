@@ -86,10 +86,15 @@ namespace Lab01MAPZ
                         TokenList[i] = TokenList[i];                       
                         if (TokenList[i].tag == (int)TokenTags.NEWLINE)
                             break;
+                            
                         TokenList.RemoveAt(i);
                         --i;
                     }
                 }
+
+                if (i >= TokenList.Count || i < 0)
+                    return;
+
                 if (TokenList[i].tag==(int)TokenTags.NEWLINE)
                 {
                     TokenList.RemoveAt(i);
@@ -105,7 +110,12 @@ namespace Lab01MAPZ
                 for (int i = 0; i < this.StatementsList.Count(); ++i) 
                 {
                     if (StatementsList[i].type == StatementTypes.EMPTY)
+                    {
                         StatementsList.RemoveAt(i);
+                        --i;
+                    }
+                        
+
                 }
 
             }
