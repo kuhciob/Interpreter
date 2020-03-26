@@ -305,8 +305,8 @@ namespace Lab01MAPZ
         {
             Console.WriteLine("");
             Console.WriteLine(String.Format("Statement [ {0} ]", Name));
-            Console.WriteLine("left son: { condition }");
-            Console.WriteLine(" |");
+            Console.WriteLine("left son: { condition }--left son [null]");
+            Console.WriteLine("               |");
             ExTree.PrintTree(this.tree);
             Console.WriteLine(" . . . ");
             Console.WriteLine("right son: { body }");

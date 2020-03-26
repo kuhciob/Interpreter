@@ -31,8 +31,8 @@ namespace Lab01MAPZ
         }
         public List<Statement> Parse()
         {
-            try
-            {
+            //try
+           // {
                 if (TokenList.Count == 0) 
                     return new List<Statement>();
 
@@ -47,12 +47,12 @@ namespace Lab01MAPZ
                 }
                 return StatementsList;
 
-            }
+           /* }
             catch (Exception ex0)
             {
                 MessageBox.Show(ex0.Message);
                 return null;
-            }
+            }*/
 
         }
         private void reserve(Function t) { functions.Add(t.Name, t); }
